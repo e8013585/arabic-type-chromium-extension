@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=360" />
+  <title>Arabic Type</title>
+
+  <!--
+    Preload Google Fonts for ALL 12 fonts so preview cards render
+    immediately without waiting for content.js or user interaction.
+    This is acceptable overhead in the popup context (one-time load).
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="anonymous" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+
+  <!-- Cairo -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&subset=arabic&display=swap"
+    crossorigin="anonymous" />
+  <!-- Amiri -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&subset=arabic&display=swap"
+    crossorigin="anonymous" />
+  <!-- Tajawal -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&subset=arabic&display=swap"
+    crossorigin="anonymous" />
+  <!-- Noto Naskh Arabic -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&subset=arabic&display=swap"
+    crossorigin="anonymous" />
+  <!-- Noto Kufi Arabic -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;700&subset=arabic&display=swap"
+    crossorigin="anonymous" />
+  <!-- Reem Kufi -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&subset=arabic&display=swap"
+    crossorigin="anonymous" />
+  <!-- Scheherazade New -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&subset=arabic&display=swap"
+    crossorigin="anonymous" />
+  <!-- Lateef -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Lateef:wght@400&subset=arabic&display=swap"
+    crossorigin="anonymous" />
+  <!-- Harmattan -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Harmattan:wght@400;700&subset=arabic&display=swap"
+    crossorigin="anonymous" />
+  <!-- Mada -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Mada:wght@400;500;600;700&subset=arabic&display=swap"
+    crossorigin="anonymous" />
+  <!-- El Messiri -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&subset=arabic&display=swap"
+    crossorigin="anonymous" />
+  <!-- IBM Plex Sans Arabic -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&subset=arabic&display=swap"
+    crossorigin="anonymous" />
+
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+
+  <!--
+    popup.js applies dir="rtl" to <body> when the UI language is Arabic,
+    Farsi, or Urdu (detected via chrome.i18n.getUILanguage()).
+    All user-visible text is set via textContent in popup.js using
+    chrome.i18n.getMessage() — no hardcoded strings in this HTML.
+  -->
+
+  <!-- ── HEADER ──────────────────────────────────────────────────────────── -->
+  <header class="at-popup-header">
+    <div class="at-header-title-group">
+      <!-- Extension name: set via popup.js, rendered in Cairo font -->
+      <span class="at-extension-name" id="at-extension-name"></span>
+      <span class="at-version-badge" id="at-version-badge"></span>
+    </div>
+    <div class="at-header-toggle-group">
+      <!-- Master ON/OFF toggle -->
+      <label class="at-toggle-label" id="at-master-toggle-label" for="at-master-toggle">
+        <!-- label text set by popup.js -->
+      </label>
+      <label class="at-toggle-switch" aria-label="">
+        <input type="checkbox" id="at-master-toggle" />
+        <span class="at-toggle-track">
+          <span class="at-toggle-thumb"></span>
+        </span>
+      </label>
+    </div>
+  </header>
+
+  <!-- ── STATUS ROW ─────────────────────────────────────────────────────── -->
+  <div class="at-status-row" id="at-status-row" role="status" aria-live="polite">
+    <span class="at-status-dot" id="at-status-dot"></span>
+    <span class="at-status-text" id="at-status-text"></span>
+  </div>
+
+  <!-- ── SITE DISABLED BANNER (shown when site is in exceptions) ────────── -->
+  <div class="at-site-disabled-banner at-hidden" id="at-site-disabled-banner">
+    <span id="at-site-disabled-text"></span>
+  </div>
+
+  <!-- ── MAIN CONTENT (hidden when master toggle is OFF) ───────────────── -->
+  <div id="at-main-content">
+
+    <!-- ── SCRIPT FILTER TABS ──────────────────────────────────────────── -->
+    <div class="at-section at-script-filter-section">
+      <div class="at-tabs" role="tablist" id="at-script-filter-tabs">
+        <button class="at-tab at-tab-active" data-filter="all" role="tab" id="at-tab-all"></button>
+        <button class="at-tab" data-filter="arabic" role="tab" id="at-tab-arabic"></button>
+        <button class="at-tab" data-filter="farsi_urdu" role="tab" id="at-tab-farsi-urdu"></button>
+      </div>
+    </div>
+
+    <!-- ── FONT PICKER ─────────────────────────────────────────────────── -->
+    <div class="at-section at-font-section">
+      <div class="at-section-label" id="at-font-picker-label"></div>
+      <div class="at-font-list" id="at-font-list" role="listbox">
+        <!-- Font cards injected by popup.js -->
+      </div>
+    </div>
+
+    <!-- ── TYPOGRAPHY CONTROLS ────────────────────────────────────────── -->
+    <div class="at-section at-typography-section">
+      <div class="at-section-label" id="at-typography-label"></div>
+
+      <!-- Line Height -->
+      <div class="at-control-row">
+        <div class="at-control-label-row">
+          <label class="at-control-label" for="at-line-height-slider" id="at-line-height-label"></label>
+          <span class="at-control-value" id="at-line-height-value"></span>
+        </div>
+        <input
+          type="range"
+          id="at-line-height-slider"
+          class="at-slider"
+          min="1.4"
+          max="2.4"
+          step="0.1"
+          value="1.8"
+        />
+      </div>
+
+      <!-- Font Size Scale -->
+      <div class="at-control-row">
+        <div class="at-control-label-row">
+          <label class="at-control-label" for="at-font-size-slider" id="at-font-size-label"></label>
+          <span class="at-control-value" id="at-font-size-value"></span>
+        </div>
+        <input
+          type="range"
+          id="at-font-size-slider"
+          class="at-slider"
+          min="80"
+          max="150"
+          step="5"
+          value="100"
+        />
+      </div>
+
+      <!-- Letter Spacing (read-only info row) -->
+      <div class="at-control-row at-info-row">
+        <div class="at-control-label-row">
+          <span class="at-control-label" id="at-letter-spacing-label"></span>
+          <span class="at-badge at-badge-fixed" id="at-letter-spacing-fixed"></span>
+        </div>
+        <div class="at-info-note" id="at-letter-spacing-note-row">
+          <span class="at-info-icon" aria-hidden="true">ℹ</span>
+          <span class="at-info-text" id="at-letter-spacing-note"></span>
+        </div>
+      </div>
+
+      <!-- Force RTL Toggle -->
+      <div class="at-control-row at-toggle-row">
+        <div class="at-toggle-row-content">
+          <div>
+            <div class="at-control-label" id="at-force-rtl-label"></div>
+            <div class="at-control-description" id="at-force-rtl-description"></div>
+          </div>
+          <label class="at-toggle-switch" id="at-force-rtl-toggle-label">
+            <input type="checkbox" id="at-force-rtl-toggle" />
+            <span class="at-toggle-track">
+              <span class="at-toggle-thumb"></span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Fix Diacritics Toggle -->
+      <div class="at-control-row at-toggle-row">
+        <div class="at-toggle-row-content">
+          <div>
+            <div class="at-control-label" id="at-diacritics-label"></div>
+            <div class="at-control-description" id="at-diacritics-description"></div>
+          </div>
+          <label class="at-toggle-switch" id="at-diacritics-toggle-label">
+            <input type="checkbox" id="at-diacritics-toggle" />
+            <span class="at-toggle-track">
+              <span class="at-toggle-thumb"></span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+    </div><!-- /at-typography-section -->
+
+    <!-- ── PER-SITE SETTINGS ───────────────────────────────────────────── -->
+    <div class="at-section at-site-section">
+      <div class="at-section-label" id="at-site-section-label"></div>
+
+      <!-- Disable on this site toggle -->
+      <div class="at-control-row at-toggle-row">
+        <div class="at-toggle-row-content">
+          <div>
+            <div class="at-control-label" id="at-disable-site-label"></div>
+            <div class="at-control-description at-hostname-display" id="at-current-hostname"></div>
+          </div>
+          <label class="at-toggle-switch">
+            <input type="checkbox" id="at-disable-site-toggle" />
+            <span class="at-toggle-track">
+              <span class="at-toggle-thumb"></span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Per-site font override toggle -->
+      <div class="at-control-row at-toggle-row">
+        <div class="at-toggle-row-content">
+          <div>
+            <div class="at-control-label" id="at-site-font-override-label"></div>
+            <div class="at-control-description" id="at-site-font-override-description"></div>
+          </div>
+          <label class="at-toggle-switch">
+            <input type="checkbox" id="at-site-font-override-toggle" />
+            <span class="at-toggle-track">
+              <span class="at-toggle-thumb"></span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Per-site secondary font picker (shown when override is ON) -->
+      <div class="at-site-font-picker at-hidden" id="at-site-font-picker">
+        <div class="at-site-font-picker-label" id="at-site-font-picker-label"></div>
+        <div class="at-font-list at-font-list-compact" id="at-site-font-list" role="listbox">
+          <!-- Compact font cards injected by popup.js -->
+        </div>
+      </div>
+
+      <!-- Exceptions list -->
+      <div class="at-exceptions-section" id="at-exceptions-section">
+        <div class="at-exceptions-label" id="at-exceptions-label"></div>
+        <ul class="at-exceptions-list" id="at-exceptions-list">
+          <!-- Exception items injected by popup.js -->
+        </ul>
+        <div class="at-exceptions-empty at-hidden" id="at-exceptions-empty"></div>
+      </div>
+
+    </div><!-- /at-site-section -->
+
+  </div><!-- /at-main-content -->
+
+  <!-- ── FOOTER ──────────────────────────────────────────────────────────── -->
+  <footer class="at-popup-footer">
+    <p class="at-footer-note" id="at-font-source-note"></p>
+    <p class="at-footer-note at-footer-privacy" id="at-font-privacy-note"></p>
+  </footer>
+
+  <!--
+    Load fonts.js before popup.js so window.ARABIC_FONTS is available.
+    fonts.js is listed as a web_accessible_resource in manifest.json.
+  -->
+  <script src="fonts.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

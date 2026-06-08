@@ -1,0 +1,70 @@
+/*
+ * content.css
+ * Arabic Type Extension — Injected Stylesheet
+ *
+ * This file provides the base class definitions for elements detected
+ * as containing Arabic text. Dynamic values (font-family, line-height,
+ * font-size scale) are injected via <style id="at-element-fix"> by
+ * content.js, which overrides the placeholder values here.
+ *
+ * All class names use the "at-" prefix to prevent collision with
+ * host page styles or other extensions.
+ *
+ * NOTE: font-family and line-height are intentionally absent here —
+ * they are set by content.js dynamically based on user settings.
+ * The rules below are the safe static defaults.
+ */
+
+/* ── Primary fix class: applied to Arabic-detected elements ─────────────── */
+.at-arabic-fix {
+  letter-spacing: 0 !important;
+  word-spacing: normal !important;
+
+  /* Text rendering quality */
+  text-rendering: optimizeLegibility !important;
+  -webkit-font-smoothing: antialiased !important;
+
+  /* Arabic ligatures are essential for correct letter connection */
+  font-feature-settings: "liga" 1, "calt" 1, "kern" 1 !important;
+  font-variant-ligatures: common-ligatures contextual !important;
+
+  /* Safe word breaking — never break-all (breaks Arabic mid-word) */
+  overflow-wrap: break-word !important;
+  word-break: normal !important;
+}
+
+/* ── RTL enforcement: applied only when forceRTL is ON + element qualifies ─ */
+.at-arabic-rtl {
+  direction: rtl !important;
+  text-align: right !important;
+  unicode-bidi: embed !important;
+}
+
+/*
+ * Children of fixed blocks:
+ * They inherit letter-spacing: 0 and font-feature-settings from the
+ * .at-arabic-fix ancestor. We do not re-apply any overrides here to
+ * avoid unintended side effects on non-Arabic child elements.
+ * The :not() selector below is intentionally left empty as a hook
+ * for future targeted child fixes without affecting all children.
+ */
+.at-arabic-fix *:not(.at-arabic-fix):not(.at-arabic-rtl) {
+  /*
+   * Inherits critical properties from parent (.at-arabic-fix):
+   *   - letter-spacing: 0
+   *   - font-feature-settings
+   *   - font-variant-ligatures
+   * No additional overrides applied here.
+   */
+}
+
+/*
+ * Diacritics fix (enabled when fixDiacritics setting is ON).
+ * This class is added dynamically by content.js via the at-element-fix
+ * style block rather than here, since it depends on user settings.
+ * Defined here for documentation purposes only.
+ *
+ * .at-arabic-fix (when diacritics fix is active, added via dynamic CSS):
+ *   text-underline-offset: 3px;
+ *   text-decoration-skip-ink: auto;
+ */
